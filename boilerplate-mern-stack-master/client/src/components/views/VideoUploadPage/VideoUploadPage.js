@@ -12,10 +12,10 @@ const PrivateOptions =[
 ]
 
 const CategoryOption =[
-    {value:0, label:"Film"},
-    {value:1, labe:"Autos & Vehcles"},
-    {value:2, label:"Music"},
-    {value:3, label:"Pets & Animals"}
+    {value:0, label:"학교 시설 정보"},
+    {value:1, labe:"학교 일정"},
+    {value:2, label:"학생 지원"},
+    {value:3, label:"주변 시설"}
 ]
 
 
@@ -30,8 +30,16 @@ function VideoUploadPage() {
         setVideoTitle(e.currentTarget.value)
     }
 
-    const onDescriptionChange = ()=> {
+    const onDescriptionChange = (e)=> {
+      setDescription(e.currentTarget.value)
+    }
 
+    const onPrivateChange =(e)=>{
+      setPrivate(e.currentTarget.value)
+    }
+
+    const onCategoryChange = (e) =>{
+      setCategory(e.currentTarget.value)
     }
 
 
@@ -86,7 +94,7 @@ function VideoUploadPage() {
         <br/>
         <br/>
        
-       <select onChange> 
+       <select onChange = {onPrivateChange}> 
                  {PrivateOptions.map((item, index) =>(
                    <option key ={index} value={item.value}>{item.label}</option>
                  ))}
@@ -94,12 +102,12 @@ function VideoUploadPage() {
 
         <br/>
         <br/>
-       <select onChange>
+       <select onChange = {onCategoryChange}>
             {CategoryOption.map((item, index) => (
                 <option key={index} value={item.value}>{item.label}</option>
 
             ))}
-         <option key value></option>
+        
        </select>
        <br/>
        <br/>
