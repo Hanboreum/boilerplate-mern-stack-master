@@ -29,6 +29,8 @@ let storage = multer.diskStorage({
 
 const upload = multer({storage: storage }).single("file");
 
+
+
 router.post('/uploadfiles', (req, res)=>{
 
     //비디오 서버에 저장하기
@@ -38,7 +40,7 @@ router.post('/uploadfiles', (req, res)=>{
     }
     return res.json({success: true, url: res.req.file.path, fileName: res.req.file.filename})
    })
-})
+});
 
 router.post("/uploadVideo", (req, res) => {
     //비디오정보들 저장
@@ -51,6 +53,19 @@ router.post("/uploadVideo", (req, res) => {
     })
 
 });
+
+router.get("/getVideos", (req, res) => {
+
+    //비디오를 db에서 가져와 client에 보냄
+    Video.find()
+        .populate('writer')
+        .exec((err, videos) => {
+            if(err) return res.status(400).send(err);
+            res.status(200).json({ success: true, videos })
+        })
+
+});
+
 
 
 
@@ -90,9 +105,9 @@ let fileDuration =""
         folder:'uploads/thumbnails',
         size:'320x240',
         filename:'thumbnail-%b.png'
-    })
+    });
 
-})
+});
 
 
 module.exports = router;
