@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "fluent": "^0.13.0",
     "mongodb": "3.7"
   },
   "devDependencies": {
