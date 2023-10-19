@@ -1,28 +1,29 @@
 const express = require('express');
 const router = express.Router();
-const { Video } = require("../models/Video");
-
-const { auth } = require("../middleware/auth");
 const multer = require("multer");
 var ffmpeg = require("fluent-ffmpeg");
+
+
+const { auth } = require("../middleware/auth");
 const { duration } = require('moment');
+const { Video } = require("../models/Video");
 
 //=================================
 //             video
 //=================================
-let stoage = multer.diskStorage({
+let storage = multer.diskStorage({
     destination: (req,file, cb) =>{
         cb(null ,"uploads/");
     },
     filename:(req, file, cb)=>{
-        cb(null, `${Data.now()}_${file.originalname}`);
+        cb(null, `${Date.now()}_${file.originalname}`)
     },
-    fileFilter: (req, file, cb) =>{
-        const ext =path.extname(file.originalname)
-        if(ext !== '.mp4') {
-            return cb(res.status(400).end('mp4 파일만 업로드 가능합니다. '), false);
+    fileFilter: (req, file, cb) => {
+        const ext = path.extname(file.originalname)
+        if (ext !== '.mp4') {
+            return cb(res.status(400).end('only jpg, png, mp4 is allowed'), false);
         }
-        cb(null,true)
+        cb(null, true)
     }
 });
 
@@ -38,6 +39,19 @@ router.post('/uploadfiles', (req, res)=>{
     return res.json({success: true, url: res.req.file.path, fileName: res.req.file.filename})
    })
 })
+
+router.post("/uploadVideo", (req, res) => {
+    //비디오정보들 저장
+
+    const video = new Video(req.body)
+
+    video.save((err, doc) => {
+        if(err) return res.json({ success: false, err })
+         res.status(200).json({ success: true })
+    })
+
+});
+
 
 
 router.post('/thumbnail', (req, res)=>{
