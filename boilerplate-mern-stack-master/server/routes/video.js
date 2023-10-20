@@ -9,9 +9,9 @@ const { duration } = require('moment');
 const { Video } = require("../models/Video");
 
 //=================================
-//             video
+//             video// let
 //=================================
-let storage = multer.diskStorage({
+var storage = multer.diskStorage({
     destination: (req,file, cb) =>{
         cb(null ,"uploads/");
     },
@@ -27,8 +27,8 @@ let storage = multer.diskStorage({
     }
 });
 
-const upload = multer({storage: storage }).single("file");
-
+var upload = multer({storage: storage }).single("file");
+//const
 
 
 router.post('/uploadfiles', (req, res)=>{
