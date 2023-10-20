@@ -1,9 +1,9 @@
 {
   "dependencies": {
     "fluent": "^0.13.0",
-    "mongodb": "3.7"
+    "mongodb": "3.0"
   },
   "devDependencies": {
-    "concurrently": "^8.2.1"
+    "concurrently": "^8.2.2"
   }
 }

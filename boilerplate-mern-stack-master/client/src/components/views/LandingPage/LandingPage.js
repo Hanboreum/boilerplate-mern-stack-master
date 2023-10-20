@@ -1,7 +1,7 @@
 import  React, { useEffect, useState } from 'react'
 import { FaCode } from "react-icons/fa";
 import { Card, Avatar, Col, Typography, Row } from 'antd';
-import moment, { min } from 'moment';
+import moment from 'moment';
 import Axios from 'axios';
 
 const { Title } = Typography;
@@ -32,10 +32,9 @@ function LandingPage() {
         return <Col lg={6} md={8} xs={24}>
          <a href={`/video/${video._id}`} >
              <div style={{ position: 'relative' }}>
-                
              <img style={{ width: '100%' }} alt="thumbnail" src={`http://localhost:5000/${video.thumbnail}`} />
              <div className=" duration">
-                <span>{minutes}:</span>
+             <span>{minutes} : {seconds}</span>
              </div>
              </div>
              </a>
