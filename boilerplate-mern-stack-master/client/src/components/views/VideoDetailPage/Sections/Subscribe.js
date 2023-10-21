@@ -14,7 +14,7 @@ function Subscribe(props) {
 
         let variable = { userTo : props.userTo}
 
-       // const subscribeNumberVariables = { userTo: userTo, userFrom: userFrom }
+        const subscribeNumberVariables = { userTo: userTo, userFrom: userFrom }
 
         Axios.post('/api/subscribe/subscribeNumber', variable)
             .then(response => {

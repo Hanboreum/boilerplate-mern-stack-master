@@ -3,6 +3,7 @@ import { FaCode } from "react-icons/fa";
 import { Card, Avatar, Col, Typography, Row } from 'antd';
 import moment from 'moment';
 import Axios from 'axios';
+//import { response } from 'express';
 
 const { Title } = Typography;
 const { Meta } = Card;
@@ -24,6 +25,7 @@ function LandingPage() {
             })
     }, [])
 
+    
     const renderCards = Video.map((video,index) => {
 
         var minutes = Math.floor(video.duration / 60);
