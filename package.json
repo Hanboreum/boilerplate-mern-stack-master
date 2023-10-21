@@ -1,7 +1,8 @@
 {
   "dependencies": {
     "fluent": "^0.13.0",
-    "mongodb": "3.0"
+    "mongodb": "3.0",
+    "mongoose": "^5.13.21"
   },
   "devDependencies": {
     "concurrently": "^8.2.2"

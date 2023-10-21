@@ -31,8 +31,8 @@ var upload = multer({storage: storage }).single("file");
 //const
 
 
-router.post('/uploadfiles', (req, res)=>{
-
+router.post('/uploadfiles', (req, res)=>{ //uploads
+ 
     //비디오 서버에 저장하기
    upload(req, res, err => {
     if(err) {
