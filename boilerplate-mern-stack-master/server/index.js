@@ -16,7 +16,7 @@ const {User} = require('./models/User'); //임의추가
 
 
  const mongoose = require("mongoose");
- mongoose .connect('mongodb+srv://fullmoon0207_1:uuu11@cluster0.5jl7jc1.mongodb.net/?retryWrites=true&w=majority&appName=AtlasApp',{
+ mongoose .connect('mongodb+srv://fullmoon0207_1:uuu111@cluster0.5jl7jc1.mongodb.net/?retryWrites=true&w=majority&appName=AtlasApp',{
   useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true, useFindAndModify: false
  }) .then(() => console.log("DB connected"))
     .catch(err => console.error(err));
