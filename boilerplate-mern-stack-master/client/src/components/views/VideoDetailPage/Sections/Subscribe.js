@@ -53,7 +53,7 @@ function Subscribe(props) {
                         setSubscribeNumber(SubscribeNumber - 1)
                         setSubscribed(!Subscribed)
                     } else {
-                        alert('구독 실패에 실패')
+                        alert('구독에 실패')
                     }
                 })
 

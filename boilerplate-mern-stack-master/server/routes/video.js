@@ -5,7 +5,7 @@ const multer = require("multer");
 var ffmpeg = require("fluent-ffmpeg");
 const path = require("path"); // path 모듈 추가
 
-
+const { Subscriber} = require("../models/Subscriber")
 const { auth } = require("../middleware/auth");
 const { duration } = require('moment');
 const { Video } = require("../models/Video");
@@ -55,16 +55,42 @@ router.post("/getVideoDetail", (req, res) => {
 
 
 router.post("/uploadVideo", (req, res) => {
-    //비디오정보들 저장
 
     const video = new Video(req.body)
 
-    video.save((err, doc) => {
-        if(err) return res.json({ success: false, err })
-         res.status(200).json({ success: true })
+    video.save((err, video) => {
+        if(err) return res.status(400).json({ success: false, err })
+        return res.status(200).json({
+            success: true 
+        })
     })
 
 });
+
+router.post("/getSubscriptionVideos", (req, res) => {
+
+    //자신의 아이디르 가지고 구독하는 사람 찾기
+    Subscriber.find({ 'userFrom': req.body.userFrom })
+    .exec((err, subscriberInfo)=> {
+        if(err) return res.status(400).send(err);
+
+        let subscribedUser = [];
+
+        subscriberInfo.map((subscriber, i)=> {
+            subscribedUser.push(subscriber.userTo)
+        })
+
+
+        //찾은 사람들의 비디오를 가지고 옴
+        Video.find({ writer: { $in: subscribedUser }})
+            .populate('writer')
+            .exec((err, videos) => {
+                if(err) return res.status(400).send(err);
+                res.status(200).json({ success: true, videos })
+            })
+    })
+});
+
 
 router.get("/getVideos", (req, res) => {
 
