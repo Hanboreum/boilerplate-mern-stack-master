@@ -3,6 +3,7 @@ const express = require('express');
 const router = express.Router();
 const multer = require("multer");
 var ffmpeg = require("fluent-ffmpeg");
+const path = require("path"); // path 모듈 추가
 
 
 const { auth } = require("../middleware/auth");
@@ -28,28 +29,27 @@ var storage = multer.diskStorage({
     }
 });
 
-var upload = multer({storage: storage }).single("file");
+var upload = multer({storage: storage ,}).single("file");//fileFilter추가
 //const
 
 
 router.post('/uploadfiles', (req, res)=>{ //uploads
- 
     //비디오 서버에 저장하기
    upload(req, res, err => {
     if(err) {
         return res.json( {success: false, err})
     }
     return res.json({success: true, url: res.req.file.path, fileName: res.req.file.filename})
-   })
+   }); //;
 });
 
 router.post("/getVideoDetail", (req, res) => {
 
     Video.findOne({ "_id" : req.body.videoId })
     .populate('writer')
-    .exec((err, video) => {
+    .exec((err, videoDetail) => { //video
         if(err) return res.status(400).send(err);
-        return res.status(200).json({ success: true, videoDetail })
+        return res.status(200).json({ success: true, videoDetail }) //video로 수정
     })
 });
 
@@ -97,7 +97,7 @@ let fileDuration =""
 
 
 //썸네일 생성
-    ffmpeg(req.body.url) //비디오저장경로
+    ffmpeg(req.body.filePath) //비디오저장경로, filepath -> url
     .on('filenames',function( filenames) {
         console.log('will generate' + filenames.join(', '))
         console.log(filenames)

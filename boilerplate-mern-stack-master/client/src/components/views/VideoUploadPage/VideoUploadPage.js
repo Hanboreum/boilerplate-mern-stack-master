@@ -13,14 +13,14 @@ const {Title} = Typography;
 const PrivateOptions =[
     {value:0, label: "Private"},
     {value: 1, label: "Public"}
-]
+];
 
 const CategoryOption =[
     {value:0, label:"학교 시설 정보"},
     {value:1, labe:"학교 일정"},
     {value:2, label:"학생 지원"},
     {value:3, label:"주변 시설"}
-]
+];
 
 
 function VideoUploadPage(props) {
@@ -54,6 +54,8 @@ function VideoUploadPage(props) {
 
     const onDrop = (files) => {
      let formData  = new FormData();
+     formData.append("file", files[0]); //추가
+
      const config = {
       header: {'content-type': 'multipart/form-data'}
      }
@@ -65,30 +67,30 @@ function VideoUploadPage(props) {
         console.log(response.data)
 
         let variable ={
-          url:response.data.url,
+          filePath:response.data.filename, //url
           fileName: response.data.fileName
         }
 
-        setFilePath(response.data.url)
+        setFilePath(response.data.filename) //url
 
         Axios.post('/api/video/thumbnail', variable)
         .then(response => {
           if(response.data.success) {
 
             setDuration(response.data.fileDuration)
-            setThumbnailPath(response.data.url)
+            setThumbnailPath(response.data.filename) //url
 
             console.log(response.data)
           }else {
-            alert('썸네일 생성 실패')
+            alert('썸네일 생성 실패');
           }
-        })
+        }); //;추가
 
       }else{
-        alert('비디오 업로드 실패.')
+        alert('비디오 업로드 실패.');
       }
-     })
-    }
+     }); //;
+    }; //;
 
     const onSubmit = (e) => {
       e.preventDefault();
@@ -102,9 +104,9 @@ function VideoUploadPage(props) {
         category: Category,
         duration: Duration,
         thumbnail: ThumbnailPath
-    }
+    };
 
-      Axios.post('api/video/uploadVideo',variables)
+      Axios.post('/api/video/uploadVideo',variables)
       .then(response => {
         if (response.data.success) {
           message.success('성공적으로 업로드를 했습니다')
@@ -117,10 +119,8 @@ function VideoUploadPage(props) {
         } else {
             alert('비디오 업로드 실패')
         }
-    })
-
-      
-    }
+    }); //; 
+  }; //;
 
 
 
