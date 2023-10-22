@@ -29,11 +29,11 @@ var storage = multer.diskStorage({
     }
 });
 
-var upload = multer({storage: storage ,}).single("file");//fileFilter추가
+var upload = multer({storage: storage }).single("file");//fileFilter추가
 //const
 
 
-router.post('/uploadfiles', (req, res)=>{ //uploads
+router.post('/uploadfiles', (req, res)=>{ //uploads, uploadfiles
     //비디오 서버에 저장하기
    upload(req, res, err => {
     if(err) {
@@ -49,7 +49,7 @@ router.post("/getVideoDetail", (req, res) => {
     .populate('writer')
     .exec((err, videoDetail) => { //video
         if(err) return res.status(400).send(err);
-        return res.status(200).json({ success: true, videoDetail }) //video로 수정
+        return res.status(200).json({ success: true, videoDetail }) //video -> videoDetail로 수정
     })
 });
 
