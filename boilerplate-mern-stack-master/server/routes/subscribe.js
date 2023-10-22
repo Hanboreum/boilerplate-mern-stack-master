@@ -38,6 +38,28 @@ router.post("/subscribed", (req, res) => {
     })
 
 });
+router.post("/subscribe", (req, res) => {
+
+    const subscribe = new Subscriber(req.body);
+
+    subscribe.save((err, doc) => {
+        if(err) return res.json({ success: false, err })
+         res.status(200).json({ success: true }) //return res
+    })
+
+});
+
+
+router.post("/unSubscribe", (req, res) => {
+
+    console.log(req.body)
+
+    Subscriber.findOneAndDelete({ userTo: req.body.userTo, userFrom: req.body.userFrom })
+        .exec((err, doc)=>{
+            if(err) return res.status(400).json({ success: false, err});
+            res.status(200).json({ success: true, doc })
+        })
+});
 
 
 

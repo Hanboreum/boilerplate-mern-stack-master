@@ -53,23 +53,23 @@ function Subscribe(props) {
                         setSubscribeNumber(SubscribeNumber - 1)
                         setSubscribed(!Subscribed)
                     } else {
-                        alert('Failed to unsubscribe')
+                        alert('구독 실패에 실패')
                     }
                 })
 
         } else {
-            // 구독 중 아님
-            
+            // 구독 중 아님  
             Axios.post('/api/subscribe/subscribe', subscribeVariable)
                 .then(response => {
                     if(response.data.success) {
                         setSubscribeNumber(SubscribeNumber + 1)
                         setSubscribed(!Subscribed)
                     } else {
-                        alert('Failed to subscribe')
+                        alert('구독에 실패')
                     }
                 })
-        }
+        
+            }
 
     }
 
@@ -78,7 +78,7 @@ function Subscribe(props) {
      <div>
             <button 
             style={{
-                backgroundColor: `${Subscribed ? '#0019CF' : '#AAAAAA'}`,
+                backgroundColor: `${Subscribed ? '#AAAAAA' : ' #0019CF'}`,
                 borderRadius: '4px', color: 'white',
                 padding: '10px 16px', fontWeight: '500', fontSize: '1rem', textTransform: 'uppercase'
             }}
