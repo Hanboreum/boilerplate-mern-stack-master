@@ -11,6 +11,7 @@ function VideoDetailPage(props) {
     const variable ={ videoId:videoId }
     const [Video, setVideo] = useState([])
     const [VideoDetail, setVideoDetail] = useState([])
+    //const [Comments, setComments] =useState(intitalState)
 
     
     useEffect(() => {
@@ -25,7 +26,7 @@ function VideoDetailPage(props) {
             })
             
         },[])
-            
+        
         if(VideoDetail.writer) {
             console.log(VideoDetail)
 
