@@ -2,7 +2,7 @@ import Axios from 'axios'
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux';
 import SingleComment from './SingleComment'
-
+import ReplyComment from './ReplyComment';
 
 function Comment(props) {
 
