@@ -26,7 +26,7 @@ function VideoDetailPage(props) {
             })
             
         },[])
-        
+
         if(VideoDetail.writer) {
             console.log(VideoDetail)
 
@@ -51,7 +51,7 @@ function VideoDetailPage(props) {
                         </List.Item>
             
                         {/*comment*/}
-                        <Comment/>
+                        <Comment postId= {videoId}/>
             
                     </div>
             
