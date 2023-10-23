@@ -16,7 +16,7 @@ function VideoDetailPage(props) {
         axios.post('/api/video/getVideoDetail', variable)
             .then(response => {
                 if (response.data.success) {
-                    console.log(response.data.videoDetail) //video
+                    console.log(response.data.videoDetail) //video,videoDetail로 수정 후 에러 해결
                     setVideoDetail(response.data.videoDetail) //VideoDetail
                 } else {
                     alert('비디오 정보를 가져오는데 실패했습니다. ')
