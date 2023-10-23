@@ -15,14 +15,14 @@ function SingleComment(props) {
         setOpenReply(!OpenReply)
     }
     const onHandleChange = (e) => {
-        setCommentValue(e.currentTarget.CommentValue)
+        setCommentValue(e.currentTarget.value)
     }
     const onSubmit = (e) => {
         e.preventDefault();
 
         const variables ={
             content: CommentValue,
-            writer: user.userDate._id,
+            writer: user.userData._id,
             postId: props.postId,
             responseTo: props.comment._id
             
@@ -32,7 +32,7 @@ function SingleComment(props) {
             .then(response => {
                 if (response.data.success) {
                     setCommentValue("")
-                    setOpenReply(!OpenReply)
+                    setOpenReply(false)
                     props.refreshFunction(response.data.result)
                 } else {
                     alert('커맨트를 저장하지 못했습니다.')

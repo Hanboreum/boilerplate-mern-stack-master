@@ -47,12 +47,12 @@ function Comment(props) {
 
             {/*Comment list */}
 
-            {props.CommentLists && props.CommentLists.map((comment, index) => (
+            {props.commentLists && props.commentLists.map((comment, index) => (
                 (!comment.responseTo &&
                     <React.Fragment>
-                        <SingleComment refreshFunction={refreshFunction} comment={comment} postId={props.postId}  />
-                        <ReplyComment CommentLists={props.CommentLists} postId={props.postId} parentCommentId={comment._id} refreshFunction={props.refreshFunction} />
-                    </React.Fragment>
+                        <SingleComment refreshFunction={props.refreshFunction} comment={comment} postId={videoId}  />
+                        <ReplyComment refreshFunction={props.refreshFunction} postId={videoId} parentCommentId={comment._id}  />
+                    </React.Fragment> // postId={props.postId}
                 )
             ))}
 
