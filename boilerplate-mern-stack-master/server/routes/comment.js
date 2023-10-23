@@ -24,7 +24,7 @@ router.post("/saveComment", (req, res) => {
             })
     })
 
-})
+});
 
 router.post("/getComments", (req, res) => {
 

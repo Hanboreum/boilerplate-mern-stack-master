@@ -46,8 +46,15 @@ function Comment(props) {
             <hr />
 
             {/*Comment list */}
-            <SingleComment/>
 
+            {props.CommentLists && props.CommentLists.map((comment, index) => (
+                (!comment.responseTo &&
+                    <React.Fragment>
+                        <SingleComment refreshFunction={refreshFunction} comment={comment} postId={props.postId}  />
+                        <ReplyComment CommentLists={props.CommentLists} postId={props.postId} parentCommentId={comment._id} refreshFunction={props.refreshFunction} />
+                    </React.Fragment>
+                )
+            ))}
 
              {/* Root Comment Form */}
              <form style={{ display: 'flex' }} onSubmit={onSubmit}>
