@@ -56,29 +56,107 @@ function LikeDislikes(props) {
 
     },[])
 
+    const onLike=()=> {
+        if (LikeAction === null){
+            Axios.post('/api/like/upLike', variable)
+                .then(response => {
+                    if (response.data.success) {
+
+                        setLikes(Likes + 1)
+                        setLikeAction('liked')
+
+                        //dislike 가 이미 눌러져있다면 
+                        if (DislikeAction !== null) {
+                            setDislikeAction(null)
+                            setDislikes(Dislikes - 1)
+                        }
+
+                    } else {
+                        alert('좋아요를 올리지 못했습니다')
+                    }
+                })
+
+        } else {
+
+            Axios.post('/api/like/unLike', variable)
+                .then(response => {
+                    if (response.data.success) {
+
+                        setLikes(Likes - 1)
+                        setLikeAction(null)
+
+                    } else {
+                        alert('좋아요를 지우지 못했습니다')
+                    }
+                })
+
+        }
+
+    }
+
+    const onDisLike=() => {
+
+        if (DislikeAction !== null) {
+
+            Axios.post('/api/like/unDisLike', variable)
+                .then(response => {
+                    if (response.data.success) {
+
+                        setDislikes(Dislikes - 1)
+                        setDislikeAction(null)
+
+                    } else {
+                        alert('싫어요를 지우지 못했습니다')
+                    }
+                })
+
+        } else {
+
+            Axios.post('/api/like/upDisLike', variable)
+                .then(response => {
+                    if (response.data.success) {
+
+                        setDislikes(Dislikes + 1)
+                        setDislikeAction('disliked')
+
+                        //싫어요 버튼이 이미 눌려있다면
+                        if(LikeAction !== null ) {
+                            setLikeAction(null)
+                            setLikes(Likes - 1)
+                        }
+
+                    } else {
+                        alert('싫어요를 누르지 못했습니다')
+                    }
+                })
+        }
+    }
+
+
+
   return (
     <div>
       <span key="comment-basic-like">
       <Tooltip title="Like">
             <Icon type="like"
                   theme={LikeAction === 'liked' ? 'filled' : 'outlined'}
-                  onClick   /> 
+                  onClick ={onLike}  /> 
       </Tooltip>
       <span style={{ paddingLeft: '8px', cursor: 'auto' }}>{Likes}</span>
-      </span>
+      </span>&nbsp;&nbsp;
 
       <span key="comment-basic-dislike">
         <Tooltip title="Dislike">
                     <Icon
                         type="dislike"
                         theme={DislikeAction === 'disliked' ? 'filled' : 'outlined'}
-                        onClick
+                        onClick={onDisLike}
 
                     />
          </Tooltip>
         <span style={{ paddingLeft: '8px', cursor: 'auto' }}>{Dislikes}</span>
         
-      </span>
+      </span>&nbsp;&nbsp;
     </div>
   )
 }

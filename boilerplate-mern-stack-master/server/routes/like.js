@@ -49,6 +49,7 @@ router.post("/getDislikes", (req, res) => {
 router.post("/upLike", (req, res) => {
 
     let variable = {}
+     
     if (req.body.videoId) {
         variable = { videoId: req.body.videoId, userId: req.body.userId }
     } else {
@@ -56,10 +57,10 @@ router.post("/upLike", (req, res) => {
     }
 
     const like = new Like(variable)
-    //save the like information data in MongoDB
+    //like info에 클릭 정보 저장
     like.save((err, likeResult) => {
         if (err) return res.json({ success: false, err });
-        //In case disLike Button is already clicked, we need to decrease the dislike by 1 
+        //만약 dislike 가 이미 클릭 되ㅇ있다면 dislike -1 해줌
         Dislike.findOneAndDelete(variable)
             .exec((err, disLikeResult) => {
                 if (err) return res.status(400).json({ success: false, err });
@@ -67,7 +68,7 @@ router.post("/upLike", (req, res) => {
             })
     })
 
-})
+});
 
 
 
@@ -87,7 +88,7 @@ router.post("/unLike", (req, res) => {
             res.status(200).json({ success: true })
         })
 
-})
+});
 
 
 router.post("/unDisLike", (req, res) => {
@@ -120,10 +121,10 @@ router.post("/upDisLike", (req, res) => {
     }
 
     const disLike = new Dislike(variable)
-    //save the like information data in MongoDB
+    //좋아요 정보를 저장한다
     disLike.save((err, dislikeResult) => {
         if (err) return res.json({ success: false, err });
-        //In case Like Button is already clicked, we need to decrease the like by 1 
+        //좋아요가 이미 눌려있을 때, 좋아요를 -1 
         Like.findOneAndDelete(variable)
             .exec((err, likeResult) => {
                 if (err) return res.status(400).json({ success: false, err });
@@ -132,8 +133,7 @@ router.post("/upDisLike", (req, res) => {
     })
 
 
-})
-
+});
 
 
 module.exports = router;
