@@ -3,6 +3,9 @@ import React, { useState } from 'react'
 import { useSelector } from 'react-redux';
 import SingleComment from './SingleComment'
 import ReplyComment from './ReplyComment';
+import { Button, Input } from 'antd';
+const { TextArea } = Input;
+
 
 function Comment(props) {
 
@@ -30,7 +33,7 @@ function Comment(props) {
             .then(response => {
                 if (response.data.success) {
                     console.log(response.data.result)
-                    //setCommentValue("")
+                    setCommentValue("") //추가
                     props.refreshFunction(response.data.result)
                 } else {
                     alert('댓글 저장에 실패 했습니다')
@@ -42,14 +45,15 @@ function Comment(props) {
   return (
     <div>
        <br />
-            <p> replies</p>
+            <p> 답글</p>
             <hr />
 
             {/*Comment list */}
+            {console.log(props.CommentLists)}
 
             {props.commentLists && props.commentLists.map((comment, index) => (
                 (!comment.responseTo &&
-                    <React.Fragment>
+                    <React.Fragment >
                         <SingleComment refreshFunction={props.refreshFunction} comment={comment} postId={videoId}  />
                         <ReplyComment refreshFunction={props.refreshFunction} postId={videoId} parentCommentId={comment._id}  />
                     </React.Fragment> // postId={props.postId}

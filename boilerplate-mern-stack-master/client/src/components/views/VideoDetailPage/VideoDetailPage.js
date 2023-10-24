@@ -10,6 +10,8 @@ import LikeDislikes from './Sections/LikeDislikes';
 
 function VideoDetailPage(props) {
 
+    const [CommentLists, setCommentLists] = useState([]) //추가
+
     const videoId = props.match.params.videoId
     const variable ={ videoId:videoId }
     const [Video, setVideo] = useState([])
@@ -30,8 +32,9 @@ function VideoDetailPage(props) {
         axios.post('/api/comment/getComments',variable)
         .then(response => {
             if(response.data.success){
-                setComments(response.data.comments)
-                console.log(response.data.comments)
+                setCommentLists(response.data.comments) //setComment
+                console.log('response.data.comments',response.data.comments) //변경
+               // console.log(response.data.comments)
 
             } else{
                 alert('코멘트 정보를 가져오는데 실패했습니다')
@@ -40,8 +43,9 @@ function VideoDetailPage(props) {
             
         },[])
 
-        const refreshFunction = (newComment)=>{
-            setComments(Comments.concat(newComment))
+        const updateComment = (newComment)=>{ //refreshFunction
+            setComments(Comment.concat(newComment))
+            //return Comment.concat(newComment); 
         }
 
         if(VideoDetail.writer) {
@@ -68,8 +72,8 @@ function VideoDetailPage(props) {
                         </List.Item>
             
                         {/*comment*/}
-                        <Comment   refreshFunction = {refreshFunction} commentLists= {Comments} postId= {videoId}/>
-            
+                        <Comment CommentLists = {CommentLists} commentLists= {Comments} postId= {videoId}/>
+                      
                     </div>
             
             
