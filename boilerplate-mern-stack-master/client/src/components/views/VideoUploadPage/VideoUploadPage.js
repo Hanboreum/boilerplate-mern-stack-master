@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import { Typography, Button, Form, message, Input, Icon} from 'antd'
 import Dropzone from 'react-dropzone'
 import Axios from 'axios';
@@ -55,30 +55,30 @@ function VideoUploadPage(props) {
     const onDrop = (files) => {
      let formData  = new FormData();
      formData.append("file", files[0]); //추가
-
      const config = {
       header: {'content-type': 'multipart/form-data'}
      }
+     console.log(files)
      formData.append("file",files[0])
      
      Axios.post('/api/video/uploadfiles',formData, config)
      .then(response => {
       if(response.data.success){
-        console.log(response.data)
+        //console.log(response.data)
 
         let variable ={
-          filePath:response.data.filename, //url
+          filePath:response.data.filePath, //url, filename
           fileName: response.data.fileName
         }
 
-        setFilePath(response.data.filename) //url
+        setFilePath(response.data.filePath) //url,filename
 
         Axios.post('/api/video/thumbnail', variable)
         .then(response => {
           if(response.data.success) {
 
             setDuration(response.data.fileDuration)
-            setThumbnailPath(response.data.filename) //url
+            setThumbnailPath(response.data.thumbsFilePath) //url,filename
 
             console.log(response.data)
           }else {
@@ -94,6 +94,16 @@ function VideoUploadPage(props) {
 
     const onSubmit = (e) => {
       e.preventDefault();
+
+      if (user.userData && !user.userData.isAuth) {
+        return alert('Please Log in First')
+    }
+
+    if (Title === "" || Description === "" ||
+        Category === "" || FilePath === "" ||
+        Duration === "" || ThumbnailPath === "") {
+        return alert('Please first fill all the fields')
+    }
 
       const variables = {
         writer: user.userData._id,
@@ -138,7 +148,7 @@ function VideoUploadPage(props) {
                      <Dropzone
                      onDrop = {onDrop}
                      multiple ={false}
-                     maxSize ={1000000}
+                     maxSize ={100000000000}
                      >
                      {({ getRootProps, getInputProps}) =>(
                         <div style={{width:'300px', height:'240px', border:'1px solid lightgray', display :'flex',
@@ -154,7 +164,7 @@ function VideoUploadPage(props) {
                      
                      {/**thumnail */}
 
-                     {ThumbnailPath &&
+                     {ThumbnailPath !== "" &&
                      <div>
                      <img src={`http://localhost:5000/${ThumbnailPath}`} alt ="thumbnail"/>
                      </div>

@@ -43,7 +43,7 @@ function VideoDetailPage(props) {
             
         },[])
 
-        const updateComment = (newComment)=>{ //refreshFunction
+        const updateComment = (newComment)=>{ //refreshFunction, updateComment
             setComments(Comment.concat(newComment))
             //return Comment.concat(newComment); 
         }

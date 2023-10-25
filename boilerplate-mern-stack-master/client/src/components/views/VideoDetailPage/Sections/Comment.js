@@ -26,13 +26,13 @@ function Comment(props) {
         const variables = {
             content: CommentValue,
             writer: user.userData._id,
-            postId: videoId
+            postId: props.videoId //postId 
         }
 
         Axios.post('/api/comment/saveComment', variables)
             .then(response => {
                 if (response.data.success) {
-                    console.log(response.data.result)
+                    //console.log(response.data.result)
                     setCommentValue("") //추가
                     props.refreshFunction(response.data.result)
                 } else {
